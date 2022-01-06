@@ -6,7 +6,9 @@ use yew_router::prelude::*;
 
 use crate::manager::Route;
 
-pub struct App2 {}
+pub struct App2 {
+    redir: bool
+}
 
 #[derive(Debug)]
 pub enum AppMsg {
@@ -18,7 +20,9 @@ impl Component for App2 {
     type Properties = ();
 
     fn create(ctx: &Context<Self>) -> Self {
-        App2 {}
+        App2 {
+            redir: true
+        }
     }
 
     fn changed(&mut self, ctx: &Context<Self>) -> bool {
@@ -28,11 +32,8 @@ impl Component for App2 {
     fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             AppMsg::ChangeState => {
-                ctx.link()
-                    .history()
-                    .expect_throw("failed to read history")
-                    .push(Route::App1);
-                false
+                self.redir = true;
+                true
             }
         }
     }
@@ -43,20 +44,24 @@ impl Component for App2 {
 
     fn view(&self, ctx: &Context<Self>) -> Html {
         console::log!("view");
-        html! {
-            <body>
-            <main>
-              <form
-                onsubmit={ ctx.link().callback(|_| {
-                    AppMsg::ChangeState
-                } ) }
-                action="javascript:void(0);"
-              >
-                <h1>{ "Back" }</h1>
-                <button type="submit">{ "Back" }</button>
-              </form>
-            </main>
-            </body>
+        if self.redir {
+            html! { <Redirect<Route> to={ Route::App1 }/>  }
+        } else {
+            html! {
+                <body>
+                <main>
+                  <form
+                    onsubmit={ ctx.link().callback(|e: FocusEvent| {
+                        e.prevent_default();
+                        AppMsg::ChangeState
+                    } ) }
+                  >
+                    <h1>{ "Back" }</h1>
+                    <button type="submit">{ "Back" }</button>
+                  </form>
+                </main>
+                </body>
+            }
         }
     }
 }
