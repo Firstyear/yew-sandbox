@@ -29,7 +29,7 @@ impl Component for App2 {
         match msg {
             AppMsg::ChangeState => {
                 ctx.link()
-                    .history()
+                    .navigator()
                     .expect_throw("failed to read history")
                     .push(Route::App1);
                 false

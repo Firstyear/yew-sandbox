@@ -26,7 +26,7 @@ pub enum Route {
 #[function_component(Landing)]
 fn landing() -> Html {
     // Do this to allow use_history to work because lol.
-    use_history().unwrap().push(Route::App1);
+    use_navigator().unwrap().push(Route::App1);
     html! { <body></body> }
 }
 
