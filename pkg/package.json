@@ -1,0 +1,12 @@
+{
+  "name": "yew-sandbox",
+  "version": "0.1.0",
+  "files": [
+    "yew_sandbox_bg.wasm",
+    "yew_sandbox.js",
+    "yew_sandbox.d.ts"
+  ],
+  "module": "yew_sandbox.js",
+  "types": "yew_sandbox.d.ts",
+  "sideEffects": false
+}
