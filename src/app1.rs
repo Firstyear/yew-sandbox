@@ -13,6 +13,18 @@ pub enum AppMsg {
     ChangeState,
 }
 
+#[function_component(MyComponent)]
+pub fn my_component() -> Html {
+    let history = use_history().unwrap();
+    let onclick = Callback::once(move |_| history.push(Route::App2));
+
+    html! {
+        <>
+            <button {onclick}>{" Next "}</button>
+        </>
+    }
+}
+
 impl Component for App1 {
     type Message = AppMsg;
     type Properties = ();
@@ -28,10 +40,6 @@ impl Component for App1 {
     fn update(&mut self, ctx: &Context<Self>, msg: Self::Message) -> bool {
         match msg {
             AppMsg::ChangeState => {
-                ctx.link()
-                    .history()
-                    .expect_throw("failed to read history")
-                    .push(Route::App2);
                 false
             }
         }
@@ -46,15 +54,8 @@ impl Component for App1 {
         html! {
             <body>
             <main>
-              <form
-                onsubmit={ ctx.link().callback(|_| {
-                    AppMsg::ChangeState
-                } ) }
-                action="javascript:void(0);"
-              >
                 <h1>{ "Proceed" }</h1>
-                <button type="submit">{ "Proceed" }</button>
-              </form>
+                <MyComponent />
             </main>
             </body>
         }
