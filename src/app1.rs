@@ -52,12 +52,10 @@ impl Component for App1 {
     fn view(&self, ctx: &Context<Self>) -> Html {
         console::log!("view");
         html! {
-            <body>
             <main>
                 <h1>{ "Proceed" }</h1>
                 <MyComponent />
             </main>
-            </body>
         }
     }
 }

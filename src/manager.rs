@@ -27,7 +27,7 @@ pub enum Route {
 fn landing() -> Html {
     // Do this to allow use_history to work because lol.
     use_history().unwrap().push(Route::App1);
-    html! { <body></body> }
+    html! { <main></main> }
 }
 
 fn switch(routes: &Route) -> Html {
@@ -38,12 +38,12 @@ fn switch(routes: &Route) -> Html {
         Route::App2 => html! { <App2 /> },
         Route::NotFound => {
             html! {
-                <body>
+                <>
                     <h1>{ "404" }</h1>
                     <Link<Route> to={ Route::Landing }>
                     { "Home" }
                     </Link<Route>>
-                </body>
+                </>
             }
         }
     }
@@ -76,15 +76,9 @@ impl Component for ManagerApp {
 
     fn view(&self, _ctx: &Context<Self>) -> Html {
         html! {
-        <>
-            <head>
-                <meta charset="utf-8"/>
-                <title>{ "Yew Sandbox" }</title>
-            </head>
             <BrowserRouter>
                 <Switch<Route> render={ Switch::render(switch) } />
             </BrowserRouter>
-        </>
         }
     }
 }

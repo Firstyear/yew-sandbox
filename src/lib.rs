@@ -6,6 +6,6 @@ mod app2;
 
 #[wasm_bindgen]
 pub fn run_app() -> Result<(), JsValue> {
-    yew::start_app_as_body::<manager::ManagerApp>();
+    yew::start_app::<manager::ManagerApp>();
     Ok(())
 }
